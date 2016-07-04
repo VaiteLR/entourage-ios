@@ -475,6 +475,7 @@ typedef NS_ENUM(unsigned) {
 
 - (NSString *)formatDateForDisplay:(NSDate *)date {
     NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"fr"]];
     [formatter setDateFormat:@"EEE"];
     return [formatter stringFromDate:date];
 }
