@@ -15,6 +15,7 @@
 
 - (void)setupWithTypeAndAuthorOfTour:(OTTour*)tour;
 - (void)setupWithTime:(NSDate*)date andLocation:(CLLocation*)location;
+- (void)setupWithTime:(NSDate *)date andDistanceFromLocation:(CLLocation *)location;
 - (void)setupAsStatusButtonForFeedItem:(OTFeedItem *)feedItem;
 - (void)setupAsTypeByNameFromEntourage:(OTEntourage*)ent;
 

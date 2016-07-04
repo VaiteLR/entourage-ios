@@ -104,7 +104,6 @@
 @property (nonatomic, weak) IBOutlet UISegmentedControl *mapSegmentedControl;
 @property (nonatomic, weak) IBOutlet OTFeedItemsTableView *tableView;
 @property (nonatomic, strong) MKMapView *mapView;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) CLLocationCoordinate2D encounterLocation;
 
 @property (nonatomic, strong) OTToursMapDelegate *toursMapDelegate;
@@ -168,13 +167,32 @@
     self.toursMapDelegate = [[OTToursMapDelegate alloc] initWithMapController:self];
     self.guideMapDelegate = [[OTGuideMapDelegate alloc] initWithMapController:self];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterBackground:) name:UIApplicationWillResignActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTourConfirmation) name:@kNotificationLocalTourConfirmation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillEnterBackground:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showTourConfirmation)
+                                                 name:@kNotificationLocalTourConfirmation
+                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFilters) name:@kNotificationShowFilters object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(zoomToCurrentLocation:) name:@kNotificationShowCurrentLocation object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showFilters)
+                                                 name:@kNotificationShowFilters
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(zoomToCurrentLocation:)
+                                                 name:@kNotificationShowCurrentLocation
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(locationUpdated:)
+                                                 name:kNotificationLocationUpdated
+                                               object:nil];
+
     self.mapView = [[MKMapView alloc] init];
     [self.tableView configureWithMapView:self.mapView];
     self.tableView.feedItemsDelegate = self;
@@ -202,7 +220,6 @@
         self.stopButton.hidden = YES;
         self.createEncounterButton.hidden = YES;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationUpdated:) name:kNotificationLocationUpdated object:nil];
 }
 
 - (void)dealloc {
@@ -266,20 +283,20 @@
 
 - (void)configureMapView {
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance( CLLocationCoordinate2DMake(PARIS_LAT, PARIS_LON), MAPVIEW_REGION_SPAN_X_METERS, MAPVIEW_REGION_SPAN_Y_METERS );
-    
-    [self.mapView setRegion:region animated:YES];
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance( CLLocationCoordinate2DMake(PARIS_LAT, PARIS_LON), MAPVIEW_REGION_SPAN_X_METERS, MAPVIEW_REGION_SPAN_Y_METERS );
+//    
+//    [self.mapView setRegion:region animated:YES];
     
     self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView];
     
-    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [self.mapView addGestureRecognizer:self.tapGestureRecognizer];
-    
-   	self.mapView.showsUserLocation = YES;
-    [self zoomToCurrentLocation:nil];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.mapView addGestureRecognizer:tapGestureRecognizer];
     
     UIGestureRecognizer *longPressMapGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMapOverlay:)];
     [self.mapView addGestureRecognizer:longPressMapGesture];
+    
+    self.mapView.showsUserLocation = YES;
+    [self zoomToCurrentLocation:nil];
 }
 
 - (void)configureNavigationBar {
@@ -344,6 +361,7 @@
     [self.refreshTimer invalidate];
     if (self.isTourRunning) {
         [self createLocalNotificationForTour:self.tour.uid];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@kNotificationLocalTourShouldBeShown];
     } else {
         //[self.locationManager stopUpdatingLocation];
     }
@@ -365,8 +383,6 @@
                                                context:nil];
 }
 
-
-
 static BOOL didGetAnyData = NO;
 - (void)getData {
     if (self.toursMapDelegate.isActive) {
@@ -375,7 +391,6 @@ static BOOL didGetAnyData = NO;
         [self getPOIList];
     }
 }
-
 
 - (void)didChangePosition {
     CLLocationDistance distance = [self mapWidthInMeters];
@@ -402,7 +417,6 @@ static BOOL didGetAnyData = NO;
     self.currentPagination.beforeDate = [NSDate date];
     [self getFeeds];
 }
-
 
 - (CLLocationDistance)mapWidthInMeters {
     CLLocationDegrees deltaLongitude = self.mapView.region.span.longitudeDelta;
@@ -446,7 +460,7 @@ static BOOL didGetAnyData = NO;
                                        @"show_my_entourages_only" : myEntouragesOnly ? @"true" : @"false",
                                        @"time_range" : [entourageFilter valueForFilter:kEntourageFilterTimeframe]
                                        };
-    NSLog(@"Getting new data ...");
+    NSLog(@"Getting new data ... (%.6f, %.6f)", self.requestedToursCoordinate.latitude, self.requestedToursCoordinate.longitude);
     [[OTFeedsService new] getAllFeedsWithParameters:filterDictionary
                                             success:^(NSMutableArray *feeds) {
                                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -727,16 +741,16 @@ static BOOL didGetAnyData = NO;
         if (/*self.isTourRunning &&*/ !encounterFromTap)
             self.encounterLocation = newLocation.coordinate;
         
-        NSDate *eventDate = newLocation.timestamp;
-        NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+//        NSDate *eventDate = newLocation.timestamp;
+//        NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+//        
+//        double distance = 100.0f;
+//        if ([self.locations count] > 0) {
+//            CLLocation *previousLocation = self.locations.lastObject;
+//            distance = [newLocation distanceFromLocation:previousLocation];
+//        }
         
-        double distance = 100.0f;
-        if ([self.locations count] > 0) {
-            CLLocation *previousLocation = self.locations.lastObject;
-            distance = [newLocation distanceFromLocation:previousLocation];
-        }
-        
-        if (fabs(howRecent) < 10.0 && newLocation.horizontalAccuracy < 20 && fabs(distance) > LOCATION_MIN_DISTANCE) {
+        if (/*fabs(howRecent) < 20.0 &&*/ newLocation.horizontalAccuracy < 20 /*&& fabs(distance) > LOCATION_MIN_DISTANCE*/) {
             
             if (self.locations.count > 0 && self.isTourRunning) {
                 [self addTourPointFromLocation:newLocation];
@@ -828,6 +842,7 @@ static bool isShowingOptions = NO;
                  [self performSelector:@selector(sendTourPoints:) withObject:self.pointsToSend afterDelay:0.0];
              }
              [self.footerToolbar setTitle:OTLocalizedString(@"tour_ongoing")];
+             
          } failure:^(NSError *error) {
              [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"tour_create_error", @"")];
              NSLog(@"%@",[error localizedDescription]);
@@ -921,6 +936,7 @@ static bool isShowingOptions = NO;
     [self clearMap];
     //[self getData];
     [self forceGetNewData];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@kNotificationLocalTourShouldBeShown];
 }
 
 - (void)resumeTour {
@@ -1079,6 +1095,12 @@ static bool isShowingOptions = NO;
         CLLocationDistance distance = MKMetersBetweenMapPoints(MKMapPointForCoordinate(self.mapView.centerCoordinate), MKMapPointForCoordinate(self.mapView.userLocation.coordinate));
         BOOL animatedSetCenter = (distance < MAX_DISTANCE_FOR_MAP_CENTER_MOVE_ANIMATED_METERS);
         [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:animatedSetCenter];
+        
+        
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance( self.mapView.userLocation.location.coordinate, MAPVIEW_REGION_SPAN_X_METERS, MAPVIEW_REGION_SPAN_Y_METERS );
+    
+        [self.mapView setRegion:region animated:YES];
+
     }
 }
 

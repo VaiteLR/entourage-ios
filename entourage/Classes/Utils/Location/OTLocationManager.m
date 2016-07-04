@@ -6,12 +6,12 @@
 //  Copyright © 2016 OCTO Technology. All rights reserved.
 //
 
-#import <CoreLocation/CoreLocation.h>
+
 #import "OTLocationManager.h"
 
 @interface OTLocationManager () <CLLocationManagerDelegate>
 
-@property (nonatomic, strong) CLLocationManager *locationManager;
+
 
 @end
 
@@ -69,6 +69,5 @@
     NSDictionary *info = @{ kNotificationLocationAuthorizationChangedKey: [NSNumber numberWithBool:self.started] };
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLocationAuthorizationChanged object:self userInfo:info];
 }
-
 
 @end

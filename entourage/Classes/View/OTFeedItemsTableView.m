@@ -235,7 +235,7 @@
         organizationLabel.text = ent.title;
         [typeByNameLabel setupAsTypeByNameFromEntourage:ent];
         CLLocation *startPointLocation = ent.location;
-        [timeLocationLabel setupWithTime:ent.creationDate andLocation:startPointLocation];
+        [timeLocationLabel setupWithTime:ent.creationDate andDistanceFromLocation:startPointLocation];
     }
     [userProfileImageButton setupAsProfilePictureFromUrl:item.author.avatarUrl];
     noPeopleLabel.text = [NSString stringWithFormat:@"%d", item.noPeople.intValue];

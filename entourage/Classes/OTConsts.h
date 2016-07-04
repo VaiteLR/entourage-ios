@@ -8,8 +8,8 @@
 
 #if DEBUG
 // PREPROD - Staging
-//#define BASE_API_URL @"https://entourage-back-preprod.herokuapp.com/api/v1/"
-#define BASE_API_URL @"https://api.entourage.social/api/v1/"
+#define BASE_API_URL @"https://entourage-back-preprod.herokuapp.com/api/v1/"
+//#define BASE_API_URL @"https://api.entourage.social/api/v1/"
 
 #else
 // PROD
@@ -45,7 +45,7 @@
 #define kNotificationShowCurrentLocation "NotificationCurrentLocation"
 
 #define kNotificationNewMessage "NotificationNewMessage"
-
+#define kNotificationLocalTourShouldBeShown "ShouldShowLocalNotification"
 
 #define ABOUT_RATE_US_URL @"itms://itunes.apple.com/app/entourage-reseau-civique/id1072244410"
 #define ABOUT_FACEBOOK_URL @"https://www.facebook.com/EntourageReseauCivique"

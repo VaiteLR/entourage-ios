@@ -16,6 +16,7 @@
 #import "OTUser.h"
 #import "NSUserDefaults+OT.h"
 #import "OTFeedItem.h"
+#import "OTLocationManager.h"
 
 
 @implementation UILabel (entourage)
@@ -54,18 +55,9 @@
 
 - (void)setupWithTime:(NSDate*)date andLocation:(CLLocation*)location {
     // dateString - location
-    NSString *dateString = nil;
-    if (date != nil) {
-        TTTTimeIntervalFormatter *timeIntervalFormatter = [[TTTTimeIntervalFormatter alloc] init];
-        timeIntervalFormatter.usesIdiomaticDeicticExpressions = YES;
-        NSLocale *frLocale = [NSLocale localeWithLocaleIdentifier:@"fr"];
-        [timeIntervalFormatter setLocale:frLocale];
-        
-        NSTimeInterval timeInterval = [date timeIntervalSinceDate:[NSDate date]];
-        //[timeIntervalFormatter setUsesIdiomaticDeicticExpressions:YES];
-        dateString = [timeIntervalFormatter stringForTimeInterval:timeInterval];
-        self.text = dateString;
-    }
+    NSString *dateString = [self timeStringFromDate:date];
+    self.text = dateString;
+    
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
@@ -82,6 +74,22 @@
         }
     }];
 
+}
+
+- (void)setupWithTime:(NSDate *)date andDistanceFromLocation:(CLLocation *)location {
+    // dateString - distance
+    NSString *dateString = [self timeStringFromDate:date];
+    self.text = dateString;
+    
+    CLLocation *currentLocation = [OTLocationManager sharedInstance].locationManager.location;
+    if (currentLocation != nil) {
+        double distanceKM = [currentLocation distanceFromLocation:location]/1000.0;
+        if (dateString != nil) {
+            self.text = [NSString stringWithFormat:@"%@ - %.2fkm", dateString, distanceKM];
+        } else {
+            self.text = [NSString stringWithFormat:@"%.2fkm", distanceKM];
+        }
+    }
 }
 
 - (void)setupAsStatusButtonForFeedItem:(OTFeedItem *)feedItem {
@@ -107,6 +115,23 @@
             [self setTextColor:[UIColor appGreyishColor]];
         }
     }
+}
+
+#pragma mark - Private
+
+- (NSString*)timeStringFromDate:(NSDate *)date {
+    if (date != nil) {
+        TTTTimeIntervalFormatter *timeIntervalFormatter = [[TTTTimeIntervalFormatter alloc] init];
+        timeIntervalFormatter.usesIdiomaticDeicticExpressions = YES;
+        NSLocale *frLocale = [NSLocale localeWithLocaleIdentifier:@"fr"];
+        [timeIntervalFormatter setLocale:frLocale];
+        
+        NSTimeInterval timeInterval = [date timeIntervalSinceDate:[NSDate date]];
+        NSString *timeString = [timeIntervalFormatter stringForTimeInterval:timeInterval];
+        
+        return timeString;
+    }
+    return @"";
 }
 
 @end

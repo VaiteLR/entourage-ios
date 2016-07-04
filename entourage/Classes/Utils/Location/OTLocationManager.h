@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 #define kNotificationLocationUpdated @"NotificationLocationUpdated"
 #define kNotificationLocationUpdatedInfoKey @"NotificationLocationUpdatedInfoKey"
@@ -16,6 +17,7 @@
 
 @interface OTLocationManager : NSObject
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL started;
 
 + (OTLocationManager *)sharedInstance;

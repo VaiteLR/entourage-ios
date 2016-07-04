@@ -91,7 +91,7 @@
 
 - (void)locationUpdated:(NSNotification *)notification {
     NSArray *locations = [notification readLocations];
-    if(!locations.count)
+    if (!locations.count)
         return;
     
     CLLocation *location = locations.firstObject;
