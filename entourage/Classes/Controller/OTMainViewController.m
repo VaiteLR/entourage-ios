@@ -235,9 +235,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.toursMapDelegate.isActive) {
-        [self zoomToCurrentLocation:nil];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
