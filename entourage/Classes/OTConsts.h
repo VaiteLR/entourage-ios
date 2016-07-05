@@ -60,3 +60,4 @@
 
 #define SNAPSHOT_START "snapshot_start_%d.png"
 #define SNAPSHOT_STOP "snapshot_end_%d.png"
+#define SNAPSHOT_ENTOURAGE "snapshot_entourage_%d.png"

@@ -12,7 +12,7 @@
 
 @protocol EntourageCreatorDelegate <NSObject>
 
-- (void)didCreateEntourage;
+- (void)didCreateEntourage:(OTFeedItem *)entourage;
 
 @end
 

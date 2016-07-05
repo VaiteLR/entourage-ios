@@ -155,16 +155,16 @@ typedef NS_ENUM(unsigned) {
         [self updateRecordButton];
         [OTSpeechKitManager setup];
 #warning remove existing items.
-    
+        [self initializeTimelinePoints];
+        
         if ([self.feedItem isKindOfClass:[OTTour class]]) {
-            [self initializeTimelinePoints];
             
 
             [self getTourUsersJoins];
             [self getTourMessages];
             [self getTourEncounters];
         } else {
-            self.timelinePoints = [NSMutableArray new];
+            //self.timelinePoints = [NSMutableArray new];
             [self getEntourageMessages];
         }
     }
@@ -643,7 +643,10 @@ typedef NS_ENUM(unsigned) {
 - (void)setupStatusCell:(UITableViewCell *)cell withStatus:(OTTourStatus *)statusPoint {
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *snapshotFormat = statusPoint.type == OTTourStatusStart ? @SNAPSHOT_START : @SNAPSHOT_STOP;
+    NSString *snapshotFormat= @SNAPSHOT_ENTOURAGE;
+    if ([self.feedItem isKindOfClass:[OTTour class]]) {
+        snapshotFormat  = statusPoint.type == OTTourStatusStart ? @SNAPSHOT_START : @SNAPSHOT_STOP;
+    }
     NSString *snapshotStartFilename = [NSString stringWithFormat:snapshotFormat, self.feedItem.uid.intValue];
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:snapshotStartFilename];
     UIImage *image = [UIImage imageWithContentsOfFile:filePath];

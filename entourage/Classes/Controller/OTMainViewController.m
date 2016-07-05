@@ -1069,7 +1069,10 @@ static bool isShowingOptions = NO;
 /********************************************************************************/
 #pragma mark - EntourageCreatorDelegate
 
-- (void)didCreateEntourage {
+- (void)didCreateEntourage:(OTFeedItem *)entourage {
+    NSString *snapshotStartFilename = [NSString stringWithFormat:@SNAPSHOT_ENTOURAGE, entourage.uid.intValue];
+    [self.mapView takeSnapshotToFile:snapshotStartFilename];
+    
     [self dismissViewControllerAnimated:YES completion:^{
        [self forceGetNewData];
     }];
