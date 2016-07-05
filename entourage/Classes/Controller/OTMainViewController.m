@@ -220,6 +220,7 @@
         self.stopButton.hidden = YES;
         self.createEncounterButton.hidden = YES;
     }
+    [self setupLocationFilters];
 }
 
 - (void)dealloc {
@@ -275,6 +276,22 @@
 
 /**************************************************************************************************/
 #pragma mark - Private methods
+
+- (void)setupLocationFilters {
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *howRecentValue = [standardUserDefaults valueForKey:@"maxHowRecentValue"];
+    
+    if (!howRecentValue) {
+        // setup default values
+        [standardUserDefaults setBool:YES forKey:@"shouldUseHowRecent"];
+        [standardUserDefaults setValue:@10 forKey:@"maxHowRecentValue"];
+        [standardUserDefaults setBool:YES forKey:@"shouldUseDistance"];
+        [standardUserDefaults setValue:@10 forKey:@"minDistance"];
+        [standardUserDefaults setValue:@20 forKey:@"accuracy"];
+        [standardUserDefaults synchronize];
+    }
+}
+
 - (NSString *)formatDateForDisplay:(NSDate *)date {
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"dd/MM/yyyy"];
@@ -741,17 +758,34 @@ static BOOL didGetAnyData = NO;
         if (/*self.isTourRunning &&*/ !encounterFromTap)
             self.encounterLocation = newLocation.coordinate;
         
-//        NSDate *eventDate = newLocation.timestamp;
-//        NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-//        
-//        double distance = 100.0f;
-//        if ([self.locations count] > 0) {
-//            CLLocation *previousLocation = self.locations.lastObject;
-//            distance = [newLocation distanceFromLocation:previousLocation];
-//        }
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
         
-        if (/*fabs(howRecent) < 20.0 &&*/ newLocation.horizontalAccuracy < 20 /*&& fabs(distance) > LOCATION_MIN_DISTANCE*/) {
-            
+        BOOL shouldUseHowRecent = [standardUserDefaults boolForKey:@"shouldUseHowRecent"];
+        double maxHowRecentValue = ((NSNumber*)[standardUserDefaults valueForKey:@"maxHowRecentValue"]).doubleValue;
+        BOOL shouldUseDistance = [standardUserDefaults boolForKey:@"shouldUseDistance"];;
+        double minDistance = ((NSNumber*)[standardUserDefaults valueForKey:@"minDistance"]).doubleValue;
+        double accuracy = ((NSNumber*)[standardUserDefaults valueForKey:@"accuracy"]).doubleValue;
+        
+        BOOL condition1 = true;
+        if (shouldUseHowRecent) {
+            NSDate *eventDate = newLocation.timestamp;
+            NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+            condition1 = fabs(howRecent) < maxHowRecentValue;
+        }
+        
+        BOOL condition2 = newLocation.horizontalAccuracy < accuracy;
+        
+        BOOL condition3 = true;
+        if (shouldUseDistance) {
+            double distance = 100.0f;
+            if ([self.locations count] > 0) {
+                CLLocation *previousLocation = self.locations.lastObject;
+                distance = [newLocation distanceFromLocation:previousLocation];
+                condition3 = fabs(distance) > minDistance;
+            }
+        }
+        
+        if (condition1 && condition2 && condition3) {
             if (self.locations.count > 0 && self.isTourRunning) {
                 [self addTourPointFromLocation:newLocation];
                 if (self.toursMapDelegate.isActive) {
