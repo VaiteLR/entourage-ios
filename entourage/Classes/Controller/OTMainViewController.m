@@ -283,9 +283,9 @@
     
     if (!howRecentValue) {
         // setup default values
-        [standardUserDefaults setBool:YES forKey:@"shouldUseHowRecent"];
+        [standardUserDefaults setBool:NO forKey:@"shouldUseHowRecent"];
         [standardUserDefaults setValue:@10 forKey:@"maxHowRecentValue"];
-        [standardUserDefaults setBool:YES forKey:@"shouldUseDistance"];
+        [standardUserDefaults setBool:NO forKey:@"shouldUseDistance"];
         [standardUserDefaults setValue:@10 forKey:@"minDistance"];
         [standardUserDefaults setValue:@20 forKey:@"accuracy"];
         [standardUserDefaults synchronize];

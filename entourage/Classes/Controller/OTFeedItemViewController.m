@@ -188,7 +188,7 @@ typedef NS_ENUM(unsigned) {
     [self.timelineButton setSelected:YES];
     [self.infoButton setSelected:NO];
     
-    self.chatToolbar.hidden = NO;
+    self.chatToolbar.hidden = ![FEEDITEM_STATUS_ACTIVE isEqualToString:[self.feedItem newsfeedStatus]];;
 }
 
 - (IBAction)showInfo {

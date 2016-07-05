@@ -69,7 +69,6 @@
     [[OTTourService new]
         closeTour:self.tour
         withSuccess:^(OTTour *closedTour) {
-            [SVProgressHUD dismiss];
             if ([self.delegate respondsToSelector:@selector(tourSent:)]) {
                 [self.delegate tourSent:self.tour];
             }
