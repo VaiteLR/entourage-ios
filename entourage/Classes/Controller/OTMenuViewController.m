@@ -267,10 +267,11 @@ NSString *const OTMenuViewControllerSegueMenuAboutIdentifier = @"segueMenuIdenti
     
     // segueMenuIdentifierForSettings
     
-    OTMenuItem *itemSettings = [[OTMenuItem alloc] initWithTitle:OTLocalizedString(@"menu_param")
-                                                     iconName: @"parameters"
-                                              segueIdentifier:OTMenuViewControllerSegueMenuSettingsIdentifier];
-    [menuItems addObject:itemSettings];
+    // let's keep this for future debug
+//    OTMenuItem *itemSettings = [[OTMenuItem alloc] initWithTitle:OTLocalizedString(@"menu_param")
+//                                                     iconName: @"parameters"
+//                                              segueIdentifier:OTMenuViewControllerSegueMenuSettingsIdentifier];
+//    [menuItems addObject:itemSettings];
 
 
 //    OTMenuItem *itemDebug = [[OTMenuItem alloc] initWithTitle:OTLocalizedString(@"Mail logs")

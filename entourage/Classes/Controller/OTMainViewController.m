@@ -284,7 +284,7 @@
         [standardUserDefaults setValue:@10 forKey:@"maxHowRecentValue"];
         [standardUserDefaults setBool:NO forKey:@"shouldUseDistance"];
         [standardUserDefaults setValue:@10 forKey:@"minDistance"];
-        [standardUserDefaults setValue:@20 forKey:@"accuracy"];
+        [standardUserDefaults setValue:@30 forKey:@"accuracy"];
         [standardUserDefaults synchronize];
     }
 }
