@@ -793,9 +793,9 @@ static BOOL didGetAnyData = NO;
                     [self.mapView addOverlay:[MKPolyline polylineWithCoordinates:coords count:2]];
                     
                     //recenter map because tour is ongoing
-                    MKCoordinateRegion region = self.mapView.region;
-                    region.center = newLocation.coordinate;
-                    [self.mapView setRegion:region animated:YES];
+//                    MKCoordinateRegion region = self.mapView.region;
+//                    region.center = newLocation.coordinate;
+//                    [self.mapView setRegion:region animated:YES];
                 }
             }
             
