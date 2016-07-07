@@ -26,6 +26,7 @@
 #import "OTEntouragesViewController.h"
 #import "OTFiltersViewController.h"
 #import "OTFeedItemsPagination.h"
+#import "OTSWRevealViewController.h"
 
 #import "OTToursMapDelegate.h"
 #import "OTGuideMapDelegate.h"
@@ -374,6 +375,11 @@
     NSLog(@">>>>>>>>>>>>>>>>>>>>> APP ENTERS BACKGROUND!!!");
     [self.refreshTimer invalidate];
     if (self.isTourRunning) {
+        if ([self.parentViewController.parentViewController isKindOfClass:[SWRevealViewController class]]) {
+            SWRevealViewController *swVC = (SWRevealViewController *)self.parentViewController.parentViewController;
+            if ([swVC isKindOfClass:[SWRevealViewController class]] && (swVC.frontViewPosition != FrontViewPositionLeft))
+                [(SWRevealViewController*)swVC revealToggleAnimated:YES];
+        }
         [self dismissViewControllerAnimated:NO completion:nil];
         [self createLocalNotificationForTour:self.tour.uid];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@kNotificationLocalTourShouldBeShown];
@@ -1302,6 +1308,7 @@ static bool isShowingOptions = NO;
 }
 
 - (void)showTourConfirmation {
+   
     [self performSegueWithIdentifier:@"OTConfirmationPopup" sender:nil];
 }
 

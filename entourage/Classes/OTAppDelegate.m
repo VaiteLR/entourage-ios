@@ -393,6 +393,7 @@ NSString *const kLoginFailureNotification = @"loginFailureNotification";
                                                            handler:^(UIAlertAction * _Nonnull action) {
                                                                     [rootVC dismissViewControllerAnimated:YES completion:nil];
                                                                    if ([rootVC isKindOfClass:[SWRevealViewController class]]) {
+                                                                       
                                                                        [[NSNotificationCenter defaultCenter] postNotificationName:@kNotificationLocalTourConfirmation object:nil];
                                                                    } else {
                                                                        [UIStoryboard showSWRevealController];
@@ -404,7 +405,6 @@ NSString *const kLoginFailureNotification = @"loginFailureNotification";
         if ( NO == [[NSUserDefaults standardUserDefaults] boolForKey:@kNotificationLocalTourShouldBeShown])
             return;
         
-        UIViewController *presentedVC = rootVC.presentedViewController;
         if (rootVC.presentedViewController) {
             [rootVC dismissViewControllerAnimated:NO completion:nil];
             if ([rootVC.presentedViewController isKindOfClass:[UINavigationController class]]) {
