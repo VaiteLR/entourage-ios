@@ -404,9 +404,16 @@ NSString *const kLoginFailureNotification = @"loginFailureNotification";
         if ( NO == [[NSUserDefaults standardUserDefaults] boolForKey:@kNotificationLocalTourShouldBeShown])
             return;
         
+        UIViewController *presentedVC = rootVC.presentedViewController;
         if (rootVC.presentedViewController) {
-            if (![((UINavigationController*)rootVC.presentedViewController).viewControllers.firstObject isKindOfClass:[OTCreateMeetingViewController class]])
-                [rootVC.presentedViewController presentViewController:alert animated:YES completion:nil];
+            [rootVC dismissViewControllerAnimated:NO completion:nil];
+            if ([rootVC.presentedViewController isKindOfClass:[UINavigationController class]]) {
+                if (![((UINavigationController*)rootVC.presentedViewController).viewControllers.firstObject isKindOfClass:[OTCreateMeetingViewController class]])
+                    [rootVC.presentedViewController presentViewController:alert animated:YES completion:nil];
+            } else {
+                [rootVC presentViewController:alert animated:YES completion:nil];
+
+            }
         } else
             [rootVC presentViewController:alert animated:YES completion:nil];
     }

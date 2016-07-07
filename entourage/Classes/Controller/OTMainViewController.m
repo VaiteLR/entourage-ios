@@ -374,6 +374,7 @@
     NSLog(@">>>>>>>>>>>>>>>>>>>>> APP ENTERS BACKGROUND!!!");
     [self.refreshTimer invalidate];
     if (self.isTourRunning) {
+        [self dismissViewControllerAnimated:NO completion:nil];
         [self createLocalNotificationForTour:self.tour.uid];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@kNotificationLocalTourShouldBeShown];
     } else {
@@ -722,15 +723,15 @@ static BOOL didGetAnyData = NO;
 
 - (void)createLocalNotificationForTour:(NSNumber*)tourId {
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0.2];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:.2];
     localNotification.alertBody = OTLocalizedString(@"tour_ongoing");
     localNotification.alertAction = OTLocalizedString(@"Stop");
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     localNotification.userInfo = @{@"tourId": tourId, @"object":OTLocalizedString(@"tour_ongoing")};
     localNotification.applicationIconBadgeNumber = 0;
     
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    
 }
 
 - (OTPoiCategory*)categoryById:(NSNumber*)sid {
