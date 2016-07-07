@@ -69,7 +69,7 @@ NSString *const kLoginFailureNotification = @"loginFailureNotification";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //logger
     
-#if DEBUG
+#if DEBUGi
 //#ifdef LOG2FILE
 //#if TARGET_IPHONE_SIMULATOR == 0
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -372,9 +372,10 @@ NSString *const kLoginFailureNotification = @"loginFailureNotification";
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     // Retrieving the data
     NSDictionary *userInfo = notification.userInfo;
-    NSLog(@"Local notification received: %@", userInfo);
+    
     // Building the notification
     UIApplicationState state = [application applicationState];
+    NSLog(@"Local notification received on state%ld: %@",(long)state, userInfo);
     if (state == UIApplicationStateActive || state == UIApplicationStateBackground ||  state == UIApplicationStateInactive) {
         
         UIApplication *app = [UIApplication sharedApplication];

@@ -722,7 +722,7 @@ static BOOL didGetAnyData = NO;
 
 - (void)createLocalNotificationForTour:(NSNumber*)tourId {
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:2];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0.2];
     localNotification.alertBody = OTLocalizedString(@"tour_ongoing");
     localNotification.alertAction = OTLocalizedString(@"Stop");
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
