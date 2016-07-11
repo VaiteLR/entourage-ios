@@ -45,4 +45,15 @@
                           }];
 }
 
+- (void)sendJoinRequest:(void (^)(OTTourJoiner *))success orFailure:(void (^)(NSError *, BOOL))failure {
+    [[OTTourService new] joinTour:self.tour
+     success:^(OTTourJoiner *joiner) {
+         NSLog(@"Sent tour join request: %@", self.tour.uid);
+         success(joiner);
+     } failure:^(NSError *error) {
+         NSLog(@"Send tour join request error: %@", error.description);
+         failure(error, YES);
+     }];
+}
+
 @end

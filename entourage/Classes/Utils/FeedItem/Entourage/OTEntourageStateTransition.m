@@ -40,4 +40,15 @@
                           }];
 }
 
+- (void)sendJoinRequest:(void (^)(OTTourJoiner *))success orFailure:(void (^)(NSError *, BOOL))failure {
+    [[OTEntourageService new] joinEntourage:self.entourage
+                          success:^(OTTourJoiner *joiner) {
+                              NSLog(@"Sent entourage join request: %@", self.entourage.uid);
+                              success(joiner);
+                          } failure:^(NSError *error) {
+                              NSLog(@"Send entourage join request error: %@", error.description);
+                              failure(error, NO);
+                          }];
+}
+
 @end

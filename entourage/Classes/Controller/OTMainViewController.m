@@ -1178,35 +1178,19 @@ static bool isShowingOptions = NO;
 
 - (void)sendJoinRequest:(OTFeedItem*)feedItem {
     [SVProgressHUD show];
-    if ([feedItem isKindOfClass:[OTTour class]]) {
-        OTTour *tour = (OTTour *)feedItem;
-        [[OTTourService new]
-            joinTour:tour
-            success:^(OTTourJoiner *joiner) {
-                tour.joinStatus = JOIN_PENDING;
-                [SVProgressHUD dismiss];
-                [self performSegueWithIdentifier:@"OTTourJoinRequestSegue" sender:nil];
-                [self.tableView reloadData];
-            } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
-                NSLog(@"Error sending tour join request: %@", error.description);
+    [[[OTFeedItemFactory createFor:feedItem] getStateTransition] sendJoinRequest:^(OTTourJoiner *joiner) {
+        feedItem.joinStatus = JOIN_PENDING;
+        [SVProgressHUD dismiss];
+        [self performSegueWithIdentifier:@"OTTourJoinRequestSegue" sender:nil];
+        [self.tableView reloadData];
+    } orFailure:^(NSError *error, BOOL isTour) {
+        [SVProgressHUD dismiss];
+        NSLog(@"Error sending tour join request: %@", error.description);
+        if(!isTour)
+            [self dismissViewControllerAnimated:YES completion:^{
+                [SVProgressHUD showErrorWithStatus:[error.userInfo valueForKey:@"JSONResponseSerializerWithDataKey"]];
             }];
-    } else {
-        OTEntourage *entourage = (OTEntourage*)feedItem;
-        [[OTEntourageService new] joinEntourage:entourage
-                                        success:^(OTTourJoiner *joiner) {
-                                            [SVProgressHUD dismiss];
-                                            entourage.joinStatus = JOIN_PENDING;
-                                            [self.tableView reloadData];
-                                            [self performSegueWithIdentifier:@"OTTourJoinRequestSegue" sender:nil];
-                                        } failure:^(NSError *error) {
-                                            [SVProgressHUD dismiss];
-                                            NSLog(@"failed joining tour %@ with error %@", feedItem.uid, error.description);
-                                            [self dismissViewControllerAnimated:YES completion:^{
-                                                [SVProgressHUD showErrorWithStatus:[error.userInfo valueForKey:@"JSONResponseSerializerWithDataKey"]];
-                                            }];
-                                        }];
-    }
+    }];
 }
 
 - (void)doJoinRequest:(OTFeedItem*)feedItem {
