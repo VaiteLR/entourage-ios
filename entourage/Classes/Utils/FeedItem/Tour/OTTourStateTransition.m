@@ -22,7 +22,7 @@
                        }];
 }
 
-- (void)deactivateWithSuccess:(void (^)(BOOL))success orFailure:(void (^)(NSError*))failure {
+- (void)closeWithSuccess:(void (^)(BOOL))success orFailure:(void (^)(NSError*))failure {
     self.tour.status = TOUR_STATUS_FREEZED;
     [[OTTourService new] closeTour:self.tour
                        withSuccess:^(OTTour *updatedTour) {

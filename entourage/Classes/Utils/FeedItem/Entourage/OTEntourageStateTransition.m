@@ -17,7 +17,7 @@
     success();
 }
 
-- (void)deactivateWithSuccess:(void (^)(BOOL))success orFailure:(void (^)(NSError *))failure {
+- (void)closeWithSuccess:(void (^)(BOOL))success orFailure:(void (^)(NSError *))failure {
     self.entourage.status = FEEDITEM_STATUS_CLOSED;
     [[OTEntourageService new] closeEntourage:self.entourage
                                  withSuccess:^(OTEntourage *updatedEntourage) {

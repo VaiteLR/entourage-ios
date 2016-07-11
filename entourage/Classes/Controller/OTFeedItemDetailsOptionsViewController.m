@@ -68,8 +68,7 @@
 
 #pragma mark - Actions
 - (IBAction)doFreezeFeedItem {
-    [[[OTFeedItemFactory createFor:self.feedItem] getStateTransition]
-     deactivateWithSuccess:^(BOOL isTour) {
+    [[[OTFeedItemFactory createFor:self.feedItem] getStateTransition] closeWithSuccess:^(BOOL isTour) {
         [self dismissViewControllerAnimated:YES completion:nil];
          [self.delegate feedItemFrozen:self.feedItem];
      }

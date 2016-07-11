@@ -1228,14 +1228,10 @@ static bool isShowingOptions = NO;
             break;
         case FeedItemStateOpen:
         case FeedItemStateClosed: {
-            [[[OTFeedItemFactory createFor:feedItem] getStateTransition]
-                deactivateWithSuccess:^(BOOL isTour) {
+            [[[OTFeedItemFactory createFor:feedItem] getStateTransition] closeWithSuccess:^(BOOL isTour) {
                     [self.tableView reloadData];
-                    if (isTour) {
-                         [SVProgressHUD showSuccessWithStatus:OTLocalizedString(@"tour_quitted")];
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:OTLocalizedString(@"entourageQuitted")];
-                    }
+                    NSString* messageKey = isTour ? @"tour_quitted" : @"entourageQuitted";
+                    [SVProgressHUD showSuccessWithStatus:OTLocalizedString(messageKey)];
                 } orFailure:^(NSError *error) {
                     [SVProgressHUD showErrorWithStatus:OTLocalizedString(@"error")];
                     NSLog(@"%@",[error localizedDescription]);
