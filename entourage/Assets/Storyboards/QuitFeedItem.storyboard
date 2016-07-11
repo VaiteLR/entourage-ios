@@ -53,7 +53,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="doQuitTour" destination="WqR-bT-UxS" eventType="touchUpInside" id="x81-UB-L9N"/>
+                                    <action selector="doQuitFeedItem" destination="WqR-bT-UxS" eventType="touchUpInside" id="db0-mG-6gF"/>
                                 </connections>
                             </button>
                         </subviews>
