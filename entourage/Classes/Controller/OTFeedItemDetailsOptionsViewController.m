@@ -71,6 +71,7 @@
     [[[OTFeedItemFactory createFor:self.feedItem] getStateTransition]
      deactivateWithSuccess:^(BOOL isTour) {
         [self dismissViewControllerAnimated:YES completion:nil];
+         [self.delegate feedItemFrozen:self.feedItem];
      }
      orFailure:nil];
 }
