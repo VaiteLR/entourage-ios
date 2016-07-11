@@ -85,7 +85,6 @@
 - (IBAction)doQuitFeedItem {
     [[[OTFeedItemFactory createFor:self.feedItem] getStateTransition] quitWithSuccess:^() {
         [self dismissViewControllerAnimated:YES completion:nil];
-        self.feedItem.joinStatus = nil;
         [self.delegate feedItemFrozen:self.feedItem];
     }];
 }
