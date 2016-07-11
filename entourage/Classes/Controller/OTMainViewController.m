@@ -518,6 +518,7 @@ static BOOL didGetAnyData = NO;
 }
 
 - (void)getFeeds {
+    [self.testBehavior testMethod];
     
     if (self.currentPagination.isLoading)
         return;
