@@ -1032,23 +1032,20 @@ static bool isShowingOptions = NO;
 }
 
 - (void)createDemande {
-    self.entourageType = ENTOURAGE_DEMANDE;
-    [self dismissViewControllerAnimated:NO completion:^{
-        if (self.toursMapDelegate.isActive) {
-            [self performSegueWithIdentifier:@"EntourageCreator" sender:nil];
-        } else {
-            [self showAlert:OTLocalizedString(@"poi_create_demande_alert") withSegue:@"EntourageCreator"];
-        }
-    }];
+    [self createEntourageOfType:ENTOURAGE_DEMANDE withAlertMessage:OTLocalizedString(@"poi_create_demande_alert")];
 }
 
 - (void)createContribution {
-    self.entourageType = ENTOURAGE_CONTRIBUTION;
+    [self createEntourageOfType:ENTOURAGE_CONTRIBUTION withAlertMessage:OTLocalizedString(@"poi_create_contribution_alert")];
+}
+
+- (void) createEntourageOfType:(NSString *)entourageType withAlertMessage:(NSString *)message {
+    self.entourageType = entourageType;
     [self dismissViewControllerAnimated:NO completion:^{
         if (self.toursMapDelegate.isActive) {
             [self performSegueWithIdentifier:@"EntourageCreator" sender:nil];
         } else {
-            [self showAlert:OTLocalizedString(@"poi_create_contribution_alert") withSegue:@"EntourageCreator"];
+            [self showAlert:message withSegue:@"EntourageCreator"];
         }
     }];
 }
