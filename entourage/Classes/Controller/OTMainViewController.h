@@ -10,7 +10,6 @@
 #import "OTMeetingCalloutViewController.h"
 #import "OTCreateMeetingViewController.h"
 #import "OTConfirmationViewController.h"
-#import "OTTestBehavior.h"
 
 @class MKMapView;
 @class KPClusteringController;
@@ -28,8 +27,6 @@
 
 @property (nonatomic, strong) KPClusteringController *clusteringController;
 @property (nonatomic) double entourageScale;
-
-@property (nonatomic, strong) IBOutlet OTTestBehavior *testBehavior;
 
 - (void)zoomToCurrentLocation:(id)sender;
 - (void)didChangePosition;
