@@ -309,6 +309,7 @@
 		A8DA9E1C1E3B4BF30041ADB6 /* FlurryWatchEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = A8DA9E191E3B4BF30041ADB6 /* FlurryWatchEmpty.m */; };
 		A8DA9E1D1E3B4BF30041ADB6 /* libFlurry_7.9.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DA9E1A1E3B4BF30041ADB6 /* libFlurry_7.9.2.a */; };
 		A8FD766E1E42FE9200063C5F /* staging.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E9B386D1DC88290000F9F3F /* staging.plist */; };
+		A8FD76721E44D31F00063C5F /* UIActivityViewController+sharing.m in Sources */ = {isa = PBXBuildFile; fileRef = A8FD76711E44D31F00063C5F /* UIActivityViewController+sharing.m */; };
 		DBBE8ACE19E857A800FA218E /* OTMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBE8ACD19E857A800FA218E /* OTMenuItem.m */; };
 		DBBE8AD219E8580200FA218E /* OTMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBE8AD119E8580200FA218E /* OTMenuTableViewCell.m */; };
 		DBBE8AD619E85EA400FA218E /* OTMyMeetingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBE8AD519E85EA400FA218E /* OTMyMeetingsViewController.m */; };
@@ -898,6 +899,8 @@
 		A8DA9E181E3B4BF30041ADB6 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
 		A8DA9E191E3B4BF30041ADB6 /* FlurryWatchEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlurryWatchEmpty.m; sourceTree = "<group>"; };
 		A8DA9E1A1E3B4BF30041ADB6 /* libFlurry_7.9.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.9.2.a; sourceTree = "<group>"; };
+		A8FD76701E44D31F00063C5F /* UIActivityViewController+sharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+sharing.h"; sourceTree = "<group>"; };
+		A8FD76711E44D31F00063C5F /* UIActivityViewController+sharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+sharing.m"; sourceTree = "<group>"; };
 		DA2BFB8497BD1865E650B075 /* Pods-entourage.store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-entourage.store.xcconfig"; path = "Pods/Target Support Files/Pods-entourage/Pods-entourage.store.xcconfig"; sourceTree = "<group>"; };
 		DBBE8ACC19E857A800FA218E /* OTMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTMenuItem.h; sourceTree = "<group>"; };
 		DBBE8ACD19E857A800FA218E /* OTMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTMenuItem.m; sourceTree = "<group>"; };
@@ -1024,6 +1027,8 @@
 				1E4F56181DB63BE900AD0CAC /* NSError+OTErrorData.m */,
 				1E993BFD1DDB532E00621770 /* NSAttributedString+OTBuilder.h */,
 				1E993BFE1DDB532E00621770 /* NSAttributedString+OTBuilder.m */,
+				A8FD76701E44D31F00063C5F /* UIActivityViewController+sharing.h */,
+				A8FD76711E44D31F00063C5F /* UIActivityViewController+sharing.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2386,7 +2391,7 @@
 					6B92CA9D19A7461C004E8C9B = {
 						DevelopmentTeam = RT7X9LLTN6;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2820,6 +2825,7 @@
 				1E5C30211D6F683C00E10770 /* OTMembersCellProvider.m in Sources */,
 				1E71E6531D108790001F3777 /* NSNotification+entourage.m in Sources */,
 				6B92CAAE19A7461C004E8C9B /* main.m in Sources */,
+				A8FD76721E44D31F00063C5F /* UIActivityViewController+sharing.m in Sources */,
 				4508AE311C7F924B00EDAC1B /* OTTourOptionsViewController.m in Sources */,
 				1E06FDC91D574E1C00370F4F /* OTMessageSentCell.m in Sources */,
 				453117A41CD251C200C00BA8 /* MKMapView+entourage.m in Sources */,
@@ -3044,7 +3050,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 45;
-				DEVELOPMENT_TEAM = RT7X9LLTN6;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3068,8 +3074,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "social.entourage.entourageios$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = "Ent-Beta";
-				PROVISIONING_PROFILE = "d5840aec-b1c9-47db-9ca2-e319de707206";
-				PROVISIONING_PROFILE_SPECIFIER = "social.entourage.entourageios.beta Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = BETA;
 				SWIFT_OBJC_BRIDGING_HEADER = "entourage/Settings/entourage-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "entourage-Swift.h";
@@ -3090,9 +3096,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = entourage/entourage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 45;
-				DEVELOPMENT_TEAM = RT7X9LLTN6;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3112,8 +3118,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "social.entourage.entourageios$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8caf6f14-0dad-49a1-a9d9-1a52a61f8b8e";
-				PROVISIONING_PROFILE_SPECIFIER = "social.entourage.entourageios AppStore";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "entourage/Settings/entourage-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "entourage-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3224,9 +3230,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = entourage/entourage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 45;
-				DEVELOPMENT_TEAM = RT7X9LLTN6;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3250,8 +3256,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "social.entourage.entourageios$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = "Ent-Beta";
-				PROVISIONING_PROFILE = "0b98ae48-9f2e-404a-b7f2-ef68b953259d";
-				PROVISIONING_PROFILE_SPECIFIER = "social.entourage.entourageios.beta AdHoc";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = BETA;
 				SWIFT_OBJC_BRIDGING_HEADER = "entourage/Settings/entourage-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "entourage-Swift.h";

@@ -45,8 +45,21 @@
     self.dataSource.tableView.estimatedRowHeight = 1000;
 
     self.title = [[[OTFeedItemFactory createFor:self.feedItem] getUI] navigationTitle].uppercaseString;
-    UIBarButtonItem *moreButton = [UIBarButtonItem createWithImageNamed:@"share" withTarget:self.statusChangedBehavior andAction:@selector(startChangeStatus)];
-    [self.navigationItem setRightBarButtonItem:moreButton];
+
+    NSMutableArray *barButtons = [NSMutableArray array];
+
+    UIBarButtonItem *moreButton = [UIBarButtonItem createWithImageNamed:@"more"
+                                                             withTarget:self.statusChangedBehavior
+                                                              andAction:@selector(startChangeStatus)];
+    [barButtons addObject:moreButton];
+
+    if ([self.feedItem isKindOfClass:[OTEntourage class]]) {
+        UIBarButtonItem *shareButton = [UIBarButtonItem createWithImageNamed:@"share"
+                                                                  withTarget:self.statusChangedBehavior
+                                                                   andAction:@selector(startSharing)];
+        [barButtons addObject:shareButton];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtons];
     [self.dataSource loadDataFor:self.feedItem];
 }
 

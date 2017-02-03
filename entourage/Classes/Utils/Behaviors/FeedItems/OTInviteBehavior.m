@@ -11,6 +11,8 @@
 #import "OTConsts.h"
 #import "OTInviteContactsViewController.h"
 #import "OTInviteByPhoneViewController.h"
+#import "OTEntourage.h"
+#import "UIActivityViewController+sharing.h"
 
 @interface OTInviteBehavior ()
 
@@ -33,6 +35,8 @@
     if ([segue.identifier isEqualToString:@"SegueInviteSource"]) {
         OTInviteSourceViewController *controller = (OTInviteSourceViewController *)segue.destinationViewController;
         controller.delegate = self;
+        if (![self.feedItem isKindOfClass:[OTEntourage class]])
+            [controller removeSharing];
     }
     else if ([segue.identifier isEqualToString:@"SegueInviteFromAddressBook"]) {
         OTInviteContactsViewController *controller = (OTInviteContactsViewController *)segue.destinationViewController;
@@ -68,6 +72,12 @@
 
 - (void)inviteByPhone {
     [self.owner performSegueWithIdentifier:@"SegueInvitePhoneNumber" sender:nil];
+}
+
+- (void)share {
+    OTEntourage *entourage = (OTEntourage*)self.feedItem;
+    UIActivityViewController *activityController = [UIActivityViewController activityViewControllerForEntourage:entourage];
+    [self.owner presentViewController:activityController animated:YES completion:nil];
 }
 
 #pragma mark - InviteSuccessDelegate implementation

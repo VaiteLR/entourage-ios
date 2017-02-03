@@ -18,7 +18,8 @@
 @property (nonatomic, weak) IBOutlet OTJoinBehavior *joinBehavior;
 
 - (void)configureWith:(OTFeedItem *)feedItem;
-- (IBAction)startChangeStatus;
+- (void)startChangeStatus;
+- (void)startSharing;
 - (BOOL)prepareSegueForNextStatus:(UIStoryboardSegue *)segue;
 
 @end

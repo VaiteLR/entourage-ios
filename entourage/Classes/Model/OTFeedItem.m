@@ -34,6 +34,7 @@
         NSDictionary *lastMessageDictionary = [dictionary objectForKey:kWSKeyLastMessage];
         if([lastMessageDictionary class] != [NSNull class])
             self.lastMessage = [[OTMyFeedMessage alloc] initWithDictionary:lastMessageDictionary];
+        // TODO: Add shareUrl parsing
     }
     return self;
 }

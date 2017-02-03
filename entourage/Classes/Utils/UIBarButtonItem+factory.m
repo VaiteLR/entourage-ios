@@ -12,11 +12,14 @@
 
 + (UIBarButtonItem *)createWithImageNamed:(NSString *)imageName withTarget:(id)target andAction:(SEL)action {
     UIImage *image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *btn = [UIBarButtonItem new];
-    [btn setImage:image];
-    [btn setTarget:target];
-    [btn setAction:action];
-    return btn;
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:image forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [button setFrame:CGRectMake(0, 0, 30, 30)];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    return barButton;
 }
 
 + (UIBarButtonItem *)createWithTitle:(NSString *)title withTarget:(id)target andAction:(SEL)action colored:(UIColor *)color {

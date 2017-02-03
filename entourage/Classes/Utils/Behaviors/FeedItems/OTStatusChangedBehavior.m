@@ -12,6 +12,8 @@
 #import "OTChangeStateViewController.h"
 #import "OTMainViewController.h"
 
+#import "UIActivityViewController+sharing.h"
+
 @interface OTStatusChangedBehavior ()
 
 @property (nonatomic, strong) OTFeedItem *feedItem;
@@ -24,7 +26,13 @@
     self.feedItem = feedItem;
 }
 
-- (IBAction)startChangeStatus {
+- (void)startSharing {
+    OTEntourage *entourage = (OTEntourage*)self.feedItem;
+    UIActivityViewController *activityController = [UIActivityViewController activityViewControllerForEntourage:entourage];
+    [self.owner presentViewController:activityController animated:YES completion:nil];
+}
+
+- (void)startChangeStatus {
     [Flurry logEvent:@"OpenEntourageOptionsOverlay"];
     [self.owner performSegueWithIdentifier:@"SegueChangeState" sender:self];
 }

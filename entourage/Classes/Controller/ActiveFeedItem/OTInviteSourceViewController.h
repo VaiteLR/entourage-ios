@@ -10,6 +10,7 @@
 
 @protocol InviteSourceDelegate <NSObject>
 
+- (void)share;
 - (void)inviteContacts;
 - (void)inviteByPhone;
 
@@ -24,5 +25,7 @@
 @interface OTInviteSourceViewController : UIViewController
 
 @property(nonatomic, weak) id<InviteSourceDelegate> delegate;
+
+- (void)removeSharing;
 
 @end
