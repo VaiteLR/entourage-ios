@@ -14,7 +14,8 @@
 + (UIActivityViewController*)activityViewControllerForEntourage:(OTEntourage*)entourage {
     NSMutableArray *objectsToShare = [NSMutableArray array];
     if (entourage.title) {
-        [objectsToShare addObject:entourage.title];
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"sharing_text", nil), entourage.title];
+        [objectsToShare addObject:title];
     }
     if (entourage.shareUrl) {
         [objectsToShare addObject:entourage.shareUrl];

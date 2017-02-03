@@ -187,6 +187,7 @@ Proposez une structure";
 "organiser" = "Organisateur";
 "closed" = "Passé";
 "created_by_me_unique" = "Créés par moi uniquement";
+"sharing_text" = "Rejoignez le projet \"%@\" sur l'application Entourage";
 
 // Feed Item details
 "item_option_close" = "Arrêter";
