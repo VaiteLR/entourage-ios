@@ -84,7 +84,7 @@
                                     <constraint firstAttribute="width" constant="280" id="RDP-jD-gxP"/>
                                     <constraint firstAttribute="height" constant="36" id="Rzp-Zw-W0Q"/>
                                 </constraints>
-                                <string key="text">Entourage, c’est utile parce que c’est local ! 
+                                <string key="text">Entourage, c’est utile parce que c’est local !
 
 Participez à la solidarité de votre quartier : pour voir les actions de vos voisins, qu’ils soient avec ou sans-abri, activez la géolocalisation.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
